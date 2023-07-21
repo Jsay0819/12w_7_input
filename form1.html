@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>폼 타입 검증</title>
+  </head>
+  <style>
+    * {
+      margin: 0 auto;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    #container {
+      margin-top: 10px;
+      width: 500px;
+      height: auto;
+      /* background-color: aquamarine; */
+      border: 1px solid #797979;
+      border-radius: 3px;
+      text-align: center;
+      padding-bottom: 50px;
+    }
+    h2 {
+      margin: 50px;
+    }
+    label {
+      font-size: 17px;
+      font-weight: bold;
+      float: left;
+      margin: 15px;
+      margin-left: 25px;
+    }
+    input {
+      width: 440px;
+      height: 40px;
+      margin-bottom: 10px;
+      padding-left: 10px;
+    }
+    input:focus {
+      outline: none;
+    }
+    button {
+      width: 450px;
+      height: 40px;
+      margin-bottom: 10px;
+      background-color: rgb(19, 113, 255);
+      color: #ffff;
+      font-weight: bold;
+      border-radius: 3px;
+      border: 1px solid #797979;
+      cursor: pointer;
+    }
+    .error-message1 {
+      color: red;
+      display: none;
+      font-weight: bold;
+      font-size: 14px;
+    }
+    .error-message2 {
+      color: red;
+      display: none;
+      font-weight: bold;
+      font-size: 14px;
+    }
+    .error-message3 {
+      color: red;
+      display: none;
+      font-weight: bold;
+      font-size: 14px;
+    }
+  </style>
+  <body>
+    <div id="container">
+      <!-- 이메일 -->
+      <h2>폼 타입 검증</h2>
+      <form onsubmit="return form1()">
+        <label for="email">이메일 : </label><br />
+        <input
+          type="email"
+          id="email"
+          name="email"
+          required
+          placeholder="이메일 주소를 입력하세요"
+        /><br />
+        <button type="submit">제출</button>
+        <p id="error-message1" class="error-message1">
+          올바른 이메일 주소를 입력해주세요.
+        </p>
+      </form>
+      <!-- 전화번호 -->
+      <form onsubmit="return form2()">
+        <label for="tel">전화번호 : </label><br />
+        <input
+          type="tel"
+          id="tel"
+          name="tel"
+          required
+          placeholder="전화번호를 입력하세요 (ex: 010-0000-0000)"
+        /><br />
+        <button type="submit">제출</button>
+        <p id="error-message2" class="error-message2">
+          올바른 전화번호를 입력해주세요.
+        </p>
+      </form>
+      <!-- URL -->
+      <form onsubmit="return form3()">
+        <label for="url">URL : </label><br />
+        <input
+          type="url"
+          id="url"
+          name="url"
+          required
+          placeholder="유효한 URL을 입력하세요 (ex: http://www.example.com)"
+        /><br />
+        <button type="submit" class="lastbtn">제출</button>
+        <p id="error-message3" class="error-message3">
+          올바른 URL을 입력해주세요.
+        </p>
+      </form>
+    </div>
+    <script>
+      function form1() {
+        const emailInput = document.getElementById("email");
+        const errorMessage = document.getElementById("error-message1");
+
+        const email = emailInput.value;
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!emailRegex.test(email)) {
+          // !는 부정 -> 올바른 값이 아니면 오류 메세지를 띄워라
+          errorMessage.style.display = "block";
+          return false;
+        } else {
+          errorMessage.style.display = "none";
+          return true;
+        }
+      }
+
+      function form2() {
+        const telInput = document.getElementById("tel");
+        const errorMessage = document.getElementById("error-message2");
+
+        const tel = telInput.value;
+        const telRegex = /^\d{3}-\d{3,4}-\d{4}$/; //전화번호 정규표현식
+
+        if (!telRegex.test(tel)) {
+          errorMessage.style.display = "block";
+          return false;
+        } else {
+          errorMessage.style.display = "none";
+          return true;
+        }
+      }
+
+      function form3() {
+        const urlInput = document.getElementById("url");
+        const errorMessage = document.getElementById("error-message3");
+
+        const url = urlInput.value;
+        const urlRegex =
+          /^(https?:\/\/)?([a-z\d.-]+\.[a-z]{2,})(:\d{2,5})?([/?].*)?$/i; // url 정규표현식
+
+        if (!urlRegex.test(url)) {
+          errorMessage.style.display = "block";
+          return false;
+        } else {
+          errorMessage.style.display = "none";
+          return true;
+        }
+      }
+    </script>
+  </body>
+</html>
